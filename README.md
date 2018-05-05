@@ -9,5 +9,4 @@
 
 ### Explanation
 
-In this assignment we should practice inheritence and operator overloading.
-We do so, by Programing the so called "noughts and crosses"
+In this assignment, we should practice inheritance and operator overloading. We do so, by Programming the so-called "noughts and crosses"
