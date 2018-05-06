@@ -6,6 +6,24 @@ bool Board::checkValidIndex(int index) const
 	return (index >= 0) && (index < m_size);
 }
 
+void Board::copyProxies(Board & b1, const Board& b2)
+{
+	if (&b1 == &b2)
+	{
+		throw exception("Cannot copy the same board to itself");
+	}
+	if (b1.prx_cap != b2.prx_cap)
+	{
+		b1.prx_cap = b2.prx_cap;
+		delete [] b1.m_ptr;
+		b1.m_ptr = (Proxy*)malloc(sizeof(Proxy)*b2.prx_cap);
+	}
+	for (size_t i = 0; i < b2.proxy_counter; i++)
+	{
+		b1.m_ptr[i] = b2.m_ptr[i];
+	}
+}
+
 /**
 * Constructor
 * */
@@ -19,6 +37,15 @@ Board::Board(size_t size) : m_size(size)
 			m_a[i*m_size +j] = Board::param.empty;
 		}
 	}
+	prx_cap = INIT;
+	m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
+	//m_ptr = new Proxy[INIT];
+	// Equavivalent to m_ptr = new Proxy[Init], just need to define defualt constructor
+	if (!m_ptr)
+	{
+		throw bad_alloc();
+	}
+	proxy_counter = 0;
 }
 
 /**
@@ -27,6 +54,21 @@ Board::Board(size_t size) : m_size(size)
 */
 const Board& Board::operator=(const Board& other)
 {
+	return *this;
+	if (!this)
+	{
+		int size = other.m_size;
+		this->m_a = new char[size * size];
+		prx_cap = INIT;
+		m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
+		//m_ptr = new Proxy[INIT];
+		// Equavivalent to m_ptr = new Proxy[Init], just need to define defualt constructor
+		if (!m_ptr)
+		{
+			throw bad_alloc();
+		}
+		proxy_counter = 0;
+	}
 	if (this != &other) // Avoid self-assignment
 	{
 		//for Arrays of different sizes, deallocate original
@@ -43,6 +85,7 @@ const Board& Board::operator=(const Board& other)
 			//copy array 
 			m_a[i] = other.m_a[i];
 		}
+		Board::copyProxies(*this, other);
 	}
 	return *this;
 }
@@ -82,7 +125,7 @@ char& Board::operator[](std::pair<size_t, size_t> index) const
 	return this->m_a[indx];
 }
 
-char& Board::operator[](std::pair<size_t, size_t> index)
+Proxy & Board::operator[](std::pair<size_t, size_t> index)
 {
 	size_t indx = index.first * m_size + index.second;
 	// check for subscript out-of-range error
@@ -90,7 +133,18 @@ char& Board::operator[](std::pair<size_t, size_t> index)
 	{
 		throw IllegalCoordinateException(index, "Out of range");
 	}
-	return this->m_a[indx];
+	if (prx_cap == proxy_counter)
+	{
+		prx_cap += INIT;
+		realloc(this->m_ptr, prx_cap);
+		if (!m_ptr)
+		{
+			throw bad_alloc();
+		}
+	}
+	m_ptr[proxy_counter] = Proxy(this->m_a[indx]);
+	proxy_counter++;
+	return m_ptr[proxy_counter-1];
 }
 
 /*
@@ -99,6 +153,7 @@ char& Board::operator[](std::pair<size_t, size_t> index)
 Board::~Board()
 {
 	delete[] m_a;
+	delete[] m_ptr;
 }
 
 ostream & operator<<(ostream & os, const Board & b)
