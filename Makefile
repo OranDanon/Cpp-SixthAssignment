@@ -1,11 +1,5 @@
 CCX=g++ -std=c++11
 
-a.out: main.o Board.o Proxy.o IllegalCharException.o IllegalCoordinateException.o
-	$(CCX) main.o Board.o Proxy.o IllegalCharException.o IllegalCoordinateException.o -o a.out
-
-main.o: main.cpp
-	$(CCX) -c main.cpp
-
 Proxy.o: Proxy.cpp Proxy.h
 	$(CCX) -c Proxy.cpp
 
