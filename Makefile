@@ -1,6 +1,4 @@
-CXX=clang++-5.0 -std=c++17
-
-Proxy.o: Proxy.cpp Proxy.h
+CXX=g++ -std=c++11Proxy.o: Proxy.cpp Proxy.h
 	$(CCX) -c Proxy.cpp
 
 IllegalCharException.o: IllegalCharException.cpp IllegalCharException.h
