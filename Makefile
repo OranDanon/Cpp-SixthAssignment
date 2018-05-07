@@ -1,7 +1,7 @@
 CCX=g++ -std=c++11
 
 output.out: myMain.o Board.o Proxy.o IllegalCharException.o IllegalCoordinateException.o
-	$(CCX) myMain.o Board.o Proxy.o IllegalCharException.o IllegalCoordinateException.o -o a.out
+	$(CCX) myMain.o Board.o Proxy.o IllegalCharException.o IllegalCoordinateException.o -o output.out
 
 myMain.o: myMain.cpp
 	$(CCX) -c myMain.cpp
