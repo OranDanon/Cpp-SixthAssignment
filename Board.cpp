@@ -135,7 +135,7 @@ Proxy & Board::operator[](std::pair<size_t, size_t> index)
 	if (prx_cap == proxy_counter)
 	{
 		prx_cap += INIT;
-		realloc(this->m_ptr, prx_cap);
+		this->m_ptr = (Proxy*)realloc(this->m_ptr, prx_cap);
 		if (!m_ptr)
 		{
 			throw bad_alloc();
@@ -151,8 +151,8 @@ Proxy & Board::operator[](std::pair<size_t, size_t> index)
  */
 Board::~Board()
 {
-	delete[] m_a;
-	delete[] m_ptr;
+	free(m_a);
+	free(m_ptr);
 }
 
 ostream & operator<<(ostream & os, const Board & b)
