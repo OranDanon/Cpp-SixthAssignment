@@ -1,4 +1,4 @@
-CCX=g++ -std=c++11
+CXX=clang++-5.0 -std=c++17
 
 Proxy.o: Proxy.cpp Proxy.h
 	$(CCX) -c Proxy.cpp
