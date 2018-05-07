@@ -10,7 +10,7 @@ void Board::copyProxies(Board & b1, const Board& b2)
 {
 	if (&b1 == &b2)
 	{
-		throw exception("Cannot copy the same board to itself");
+		throw std::string("Cannot copy the same board to itself");
 	}
 	if (b1.prx_cap != b2.prx_cap)
 	{
