@@ -1,5 +1,5 @@
 #include "Board.h"
-
+#include "Proxy.h"
 #include <iostream>
 using namespace std;
 
@@ -44,8 +44,8 @@ int main() {
 	catch (const IllegalCharException& ex) {
 		cout << "Illegal char: " << ex.theChar() << endl;  // "Illegal char: x"
 	}
-
-	Board board2 = board1;
+	Board board2{ 4 };
+	board2 = board1;
 	board2[{0, 0}] = 'X';
 	cout << board1 << endl;  /* Shows an empty board, as above */
 	cout << board2 << endl;  /* Shows a board with an X at top-left */

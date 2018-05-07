@@ -2,6 +2,7 @@
 #define BOARD_H
 #include <stdio.h>
 #include <new>
+#include <exception>
 #include <iostream>
 #include "Proxy.h"
 #include "IllegalCoordinateException.h"
@@ -21,7 +22,13 @@ private:
 	size_t prx_cap;
 	size_t m_size;
 	char* m_a;
+	/*
+	 * Check that the index is valid, that means that the characters is only one of the following: 'X', 'O', '.'
+	*/
 	bool checkValidIndex(int index)const;
+	/*
+	 * Copy the Proxy array from board b2, to board b1.
+	*/
 	static void copyProxies(Board& b1, const Board& b2);
 
 public:

@@ -6,9 +6,7 @@ Proxy::Proxy(char & v): myChar(&v)
 
 Proxy& Proxy::operator=(const char & v)
 {
-	if (v != 'X' &&
-		v != 'O' &&
-		v != '.')
+	if (v != 'X' && v != 'O' && v != '.')
 	{
 		throw IllegalCharException(v, "Only X O and . are allowed");
 	}

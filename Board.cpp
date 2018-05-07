@@ -10,7 +10,7 @@ void Board::copyProxies(Board & b1, const Board& b2)
 {
 	if (&b1 == &b2)
 	{
-		throw exception("Cannot copy the same board to itself");
+		throw std::string("Cannot copy the same board to itself");
 	}
 	if (b1.prx_cap != b2.prx_cap)
 	{
@@ -39,7 +39,7 @@ Board::Board(size_t size) : m_size(size)
 	}
 	prx_cap = INIT;
 	m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
-	//m_ptr = new Proxy[INIT];
+	// m_ptr = new Proxy[INIT];
 	// Equavivalent to m_ptr = new Proxy[Init], just need to define defualt constructor
 	if (!m_ptr)
 	{
@@ -54,7 +54,6 @@ Board::Board(size_t size) : m_size(size)
 */
 const Board& Board::operator=(const Board& other)
 {
-	return *this;
 	if (!this)
 	{
 		int size = other.m_size;
