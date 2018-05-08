@@ -10,7 +10,7 @@ void Board::copyProxies(Board & b1, const Board& b2)
 {
 	if (&b1 == &b2)
 	{
-		throw std::string("Cannot copy the same board to itself");
+		throw exception("Cannot copy the same board to itself");
 	}
 	if (b1.prx_cap != b2.prx_cap)
 	{
@@ -48,26 +48,33 @@ Board::Board(size_t size) : m_size(size)
 	proxy_counter = 0;
 }
 
+Board::Board(const Board & other)
+{
+	int size = this->m_size = other.m_size;
+	this->m_a = new char[size * size];
+	prx_cap = INIT;
+	m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
+	//m_ptr = new Proxy[INIT];
+	// Equavivalent to m_ptr = new Proxy[Init], just need to define defualt constructor
+	if (!m_ptr)
+	{
+		throw bad_alloc();
+	}
+	proxy_counter = 0;
+	for (size_t i = 0; i < m_size*m_size; i++)
+	{
+		//copy array 
+		m_a[i] = other.m_a[i];
+	}
+	Board::copyProxies(*this, other);
+}
+
 /**
 * Overloaded assignment operator;
 * const return avoid (b1 = b2) = b3
 */
 const Board& Board::operator=(const Board& other)
 {
-	if (!this)
-	{
-		int size = other.m_size;
-		this->m_a = new char[size * size];
-		prx_cap = INIT;
-		m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
-		//m_ptr = new Proxy[INIT];
-		// Equavivalent to m_ptr = new Proxy[Init], just need to define defualt constructor
-		if (!m_ptr)
-		{
-			throw bad_alloc();
-		}
-		proxy_counter = 0;
-	}
 	if (this != &other) // Avoid self-assignment
 	{
 		//for Arrays of different sizes, deallocate original
@@ -135,7 +142,7 @@ Proxy & Board::operator[](std::pair<size_t, size_t> index)
 	if (prx_cap == proxy_counter)
 	{
 		prx_cap += INIT;
-		this->m_ptr = (Proxy*)realloc(this->m_ptr, prx_cap);
+		realloc(this->m_ptr, prx_cap);
 		if (!m_ptr)
 		{
 			throw bad_alloc();
@@ -151,8 +158,8 @@ Proxy & Board::operator[](std::pair<size_t, size_t> index)
  */
 Board::~Board()
 {
-	free(m_a);
-	free(m_ptr);
+	delete[] m_a;
+	delete[] m_ptr;
 }
 
 ostream & operator<<(ostream & os, const Board & b)

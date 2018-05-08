@@ -1,7 +1,6 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <stdio.h>
-#include <stdlib.h> 
 #include <new>
 #include <exception>
 #include <iostream>
@@ -34,6 +33,7 @@ private:
 
 public:
 	Board(size_t x);
+	Board(const Board& other);
 	const Board& operator=(const Board& other);
 	const Board& operator=(const char& c);
 	friend ostream& operator<< (ostream& os, const Board& c);
