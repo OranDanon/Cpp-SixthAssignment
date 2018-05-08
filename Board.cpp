@@ -187,6 +187,5 @@ ostream & operator<<(ostream & os, const Board & b)
 		}
 		os << endl;
 	}
-	os << endl;
 	return os;
 }
