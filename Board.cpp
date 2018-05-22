@@ -209,8 +209,8 @@ const bool Board::clear()
  */
 Board::~Board()
 {
-	delete[] m_a;
-	//free(m_ptr);
+	//delete[] m_a;
+	free(m_ptr);
 }
 
 ostream & operator<<(ostream & os, const Board & b)
