@@ -1,9 +1,9 @@
 #include "Player.h"
 
 
-const string Player::getChar() const
+const char Player::getChar() const
 {
-	return myChar == 'X' ? "X" : "O";
+	return myChar;
 }
 
 char Player::mychar(Board b)
