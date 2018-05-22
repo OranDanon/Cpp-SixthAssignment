@@ -15,7 +15,7 @@ public:
 	Player(const string name);
 	const virtual string name() const;
 	const virtual Coordinate play(const Board& board) = 0;
-	const virtual string getChar() const;
+	const virtual char getChar() const;
 	char mychar(Board b);
 	char mychar() const;
 	bool setChar(char c);
