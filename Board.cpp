@@ -18,7 +18,7 @@ void Board::copyProxies(Board & b1, const Board& b2)
 	if (b1.prx_cap != b2.prx_cap)
 	{
 		b1.prx_cap = b2.prx_cap;
-		free(b1.m_ptr);
+		//free(b1.m_ptr);
 		b1.m_ptr = (Proxy*)malloc(sizeof(Proxy)*b2.prx_cap);
 	}
 	for (size_t i = 0; i < b2.proxy_counter; i++)
@@ -84,7 +84,7 @@ const Board& Board::operator=(const Board& other)
 		//left-side Array, then allocate new left-side Array
 		if (this->m_size != other.m_size)
 		{
-			delete[] m_a;// realse space
+			//delete[] m_a;// realse space
 			m_size = other.m_size;//resize this object
 			m_a = new char[m_size * m_size];//create spcae for array
 		}
@@ -209,8 +209,8 @@ const bool Board::clear()
  */
 Board::~Board()
 {
-	delete[] m_a;
-	free(m_ptr);
+	//delete[] m_a;
+	//free(m_ptr);
 }
 
 ostream & operator<<(ostream & os, const Board & b)
