@@ -70,7 +70,7 @@ const bool TicTacToe::clearForbidden()
 
 TicTacToe::TicTacToe(size_t size) :b(size)
 {
-	forbidden = new int[size*size]();
+	forbidden = new int[size*size];
 }
 
 Player& TicTacToe::play(Player& p1, Player& p2)
