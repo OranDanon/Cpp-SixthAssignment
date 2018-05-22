@@ -135,9 +135,11 @@ Player & TicTacToe::winner() const
 	return *winnerr;
 }
 
-string TicTacToe::board() const
+Board TicTacToe::board() const
 {
-	ostringstream os;
+	/*ostringstream os;
 	os << b;
-	return os.str();
+	return os.str();*/
+	return b;
 }
+

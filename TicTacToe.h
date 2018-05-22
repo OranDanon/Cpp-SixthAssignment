@@ -23,7 +23,7 @@ public:
 	TicTacToe(size_t size);
 	Player& play(Player& p1, Player& p2);
 	Player& winner() const;
-	string board() const;
+	Board board() const;
 
 };
 
