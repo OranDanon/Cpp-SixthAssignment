@@ -1,7 +1,6 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <stdio.h>
-#include <stdlib.h> 
 #include <new>
 #include <exception>
 #include <iostream>
@@ -38,8 +37,12 @@ public:
 	const Board& operator=(const Board& other);
 	const Board& operator=(const char& c);
 	friend ostream& operator<< (ostream& os, const Board& c);
-	char& operator[](std::pair<size_t, size_t> index) const;
+	const char& operator[](std::pair<size_t, size_t> index) const;
 	Proxy& operator[](std::pair<size_t, size_t> index);
+	const size_t size()const;
+	const bool isFull() const;
+	const bool isEmpty()const;
+	const bool clear();
 	~Board();
 };
 

@@ -1,4 +1,6 @@
 #include "Board.h"
+#include "Coordinate.h"
+
 using namespace std;
 
 bool Board::checkValidIndex(int index) const
@@ -10,7 +12,7 @@ void Board::copyProxies(Board & b1, const Board& b2)
 {
 	if (&b1 == &b2)
 	{
-		throw std::string("Cannot copy the same board to itself");
+		throw exception("Cannot copy the same board to itself");
 	}
 	if (b1.prx_cap != b2.prx_cap)
 	{
@@ -50,7 +52,7 @@ Board::Board(size_t size) : m_size(size)
 
 Board::Board(const Board & other):m_size(other.m_size)
 {
-	int size = other.m_size;
+	size_t size = other.m_size;
 	this->m_a = new char[size * size];
 	prx_cap = INIT;
 	m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
@@ -75,20 +77,6 @@ Board::Board(const Board & other):m_size(other.m_size)
 */
 const Board& Board::operator=(const Board& other)
 {
-	if (!this)
-	{
-		int size = other.m_size;
-		this->m_a = new char[size * size];
-		prx_cap = INIT;
-		m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
-		//m_ptr = new Proxy[INIT];
-		// Equavivalent to m_ptr = new Proxy[Init], just need to define defualt constructor
-		if (!m_ptr)
-		{
-			throw bad_alloc();
-		}
-		proxy_counter = 0;
-	}
 	if (this != &other) // Avoid self-assignment
 	{
 		//for Arrays of different sizes, deallocate original
@@ -133,7 +121,7 @@ const Board & Board::operator=(const char & c)
 /**
  * subscripting operator overloading
  */
-char& Board::operator[](std::pair<size_t, size_t> index) const
+const char& Board::operator[](std::pair<size_t, size_t> index) const
 {
 	size_t indx = index.first * m_size + index.second;
 	size_t size = m_size * m_size;
@@ -156,7 +144,7 @@ Proxy & Board::operator[](std::pair<size_t, size_t> index)
 	if (prx_cap == proxy_counter)
 	{
 		prx_cap += INIT;
-		this->m_ptr = (Proxy*)realloc(this->m_ptr, prx_cap);
+		realloc(this->m_ptr, prx_cap);
 		if (!m_ptr)
 		{
 			throw bad_alloc();
@@ -167,13 +155,61 @@ Proxy & Board::operator[](std::pair<size_t, size_t> index)
 	return m_ptr[proxy_counter-1];
 }
 
+
+const size_t Board::size() const
+{
+	return this->m_size;
+}
+
+const bool Board::isFull() const
+{
+	for (size_t i = 0; i < m_size; i++)
+	{
+		for (size_t j = 0; j < m_size; j++)
+		{
+			if ((*this)[{i,j}] == '.')
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+const bool Board::isEmpty() const
+{
+	for (size_t i = 0; i < m_size; i++)
+	{
+		for (size_t j = 0; j < m_size; j++)
+		{
+			if ((*this)[{i, j}] != '.')
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+const bool Board::clear()
+{
+	for (size_t i = 0; i < m_size; i++)
+	{
+		for (size_t j = 0; j < m_size; j++)
+		{
+			m_a[i*m_size + j] = Board::param.empty;
+		}
+	}
+	return true;
+}
+
 /*
  * Destructor
  */
 Board::~Board()
 {
-	free(m_a);
-	free(m_ptr);
+	delete[] m_a;
+	delete[] m_ptr;
 }
 
 ostream & operator<<(ostream & os, const Board & b)
@@ -187,5 +223,6 @@ ostream & operator<<(ostream & os, const Board & b)
 		}
 		os << endl;
 	}
+	os << endl;
 	return os;
 }

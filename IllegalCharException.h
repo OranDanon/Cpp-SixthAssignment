@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef IllegalCharException_H
 #define IllegalCharException_H
 #include <stdexcept>
