@@ -144,6 +144,5 @@ Board TicTacToe::board() const
 
 TicTacToe::~TicTacToe()
 {
-	delete []forbidden;
+	delete [] forbidden;
 }
-

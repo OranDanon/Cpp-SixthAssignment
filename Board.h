@@ -1,6 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <stdio.h>
+#include <stdlib.h>
 #include <new>
 #include <exception>
 #include <iostream>
