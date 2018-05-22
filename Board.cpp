@@ -209,7 +209,7 @@ const bool Board::clear()
  */
 Board::~Board()
 {
-	//delete[] m_a;
+	delete[] m_a;
 	free(m_ptr);
 }
 
