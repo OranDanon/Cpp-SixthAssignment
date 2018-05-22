@@ -18,7 +18,7 @@ void Board::copyProxies(Board & b1, const Board& b2)
 	if (b1.prx_cap != b2.prx_cap)
 	{
 		b1.prx_cap = b2.prx_cap;
-		//free(b1.m_ptr);
+		free(b1.m_ptr);
 		b1.m_ptr = (Proxy*)malloc(sizeof(Proxy)*b2.prx_cap);
 	}
 	for (size_t i = 0; i < b2.proxy_counter; i++)
