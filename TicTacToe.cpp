@@ -142,3 +142,8 @@ Board TicTacToe::board() const
 	return b;
 }
 
+TicTacToe::~TicTacToe()
+{
+	delete forbidden;
+}
+

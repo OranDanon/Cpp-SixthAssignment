@@ -24,6 +24,7 @@ public:
 	Player& play(Player& p1, Player& p2);
 	Player& winner() const;
 	Board board() const;
+	~TicTacToe();
 
 };
 
