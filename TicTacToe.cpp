@@ -119,7 +119,6 @@ Player& TicTacToe::play(Player& p1, Player& p2)
 		}
 		if (isWinner(turn))
 		{
-			nextTurn(turn);
 			winnerr = players[turn];
 			return *winnerr;
 		}
