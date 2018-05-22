@@ -84,7 +84,7 @@ const Board& Board::operator=(const Board& other)
 		//left-side Array, then allocate new left-side Array
 		if (this->m_size != other.m_size)
 		{
-			//delete[] m_a;// realse space
+			delete[] m_a;// realse space
 			m_size = other.m_size;//resize this object
 			m_a = new char[m_size * m_size];//create spcae for array
 		}
