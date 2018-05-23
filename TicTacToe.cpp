@@ -46,7 +46,13 @@ const bool TicTacToe::isWinner(size_t t) const
 			return true;
 		}
 	}
-	return flag1;
+	bool flag4 = true;
+	for (int i = 0; i < b.size(); i++) 
+	{
+		if (b[{i, b.size() - i - 1}] != c)
+			return flag1;
+	}
+	return flag1 || flag4;
 }
 
 TicTacToe::TicTacToe(size_t size) :b(size)
@@ -59,7 +65,7 @@ Player& TicTacToe::play(Player& p1, Player& p2)
 	Coordinate index;
 	Player* players [2] = { &p1, &p2 };
 	b.clear();
-	//cout << b << endl;
+	cout << b << endl;
 	p1.setChar('X');
 	p2.setChar('O');
 	while (!b.isFull())
@@ -73,7 +79,7 @@ Player& TicTacToe::play(Player& p1, Player& p2)
 			}
 			std::pair<size_t, size_t>temp (index.x(), index.y());
 			b[temp] = players[turn]->mychar();
-			//cout << b << endl;
+			cout << b << endl;
 		}
 		catch (const IllegalCharException& ex) 
 		{
