@@ -25,6 +25,7 @@ const bool TicTacToe::isWinner(size_t t) const
 	}
 	for (size_t i = 0; i < b.size(); i++)
 	{
+		flag2 = true, flag3 = true;
 		for (size_t j = 0; j < b.size(); j++)
 		{
 			if (i == j && b[{i, i}] != c)
@@ -45,7 +46,7 @@ const bool TicTacToe::isWinner(size_t t) const
 			return true;
 		}
 	}
-	return flag3;
+	return flag1;
 }
 
 TicTacToe::TicTacToe(size_t size) :b(size)
@@ -66,7 +67,7 @@ Player& TicTacToe::play(Player& p1, Player& p2)
 		try
 		{
 			index = players[turn]->play(b);
-			if (b[index] == 'X' || b[index] == 'Y')
+			if (b[index] == 'X' || b[index] == 'O')
 			{
 				throw IllegalCoordinateException(index, "This index is forbidden");
 			}
