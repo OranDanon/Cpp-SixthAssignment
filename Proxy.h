@@ -6,6 +6,7 @@ class Proxy
 private:
 	char* myChar;
 public:
+	Proxy();
 	Proxy(char& v);
 	Proxy& operator=(const char& v);
 	operator char() const;

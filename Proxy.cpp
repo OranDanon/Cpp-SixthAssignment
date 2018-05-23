@@ -1,5 +1,9 @@
 #include "Proxy.h"
 
+Proxy::Proxy(): myChar(nullptr)
+{
+}
+
 Proxy::Proxy(char & v): myChar(&v)
 {
 }

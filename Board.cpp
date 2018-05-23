@@ -18,8 +18,9 @@ void Board::copyProxies(Board & b1, const Board& b2)
 	if (b1.prx_cap != b2.prx_cap)
 	{
 		b1.prx_cap = b2.prx_cap;
-		free(b1.m_ptr);
-		b1.m_ptr = (Proxy*)malloc(sizeof(Proxy)*b2.prx_cap);
+		delete[] b1.m_ptr;
+		b1.m_ptr = new Proxy[b2.prx_cap];
+		//b1.m_ptr = (Proxy*)malloc(sizeof(Proxy)*b2.prx_cap);
 	}
 	for (size_t i = 0; i < b2.proxy_counter; i++)
 	{
@@ -41,8 +42,8 @@ Board::Board(size_t size) : m_size(size)
 		}
 	}
 	prx_cap = INIT;
-	m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
-	// m_ptr = new Proxy[INIT];
+	//m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
+	m_ptr = new Proxy[INIT];
 	// Equavivalent to m_ptr = new Proxy[Init], just need to define defualt constructor
 	if (!m_ptr)
 	{
@@ -56,8 +57,8 @@ Board::Board(const Board & other):m_size(other.m_size)
 	size_t size = other.m_size;
 	this->m_a = new char[size * size];
 	prx_cap = INIT;
-	m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
-	//m_ptr = new Proxy[INIT];
+	//m_ptr = (Proxy*)malloc(sizeof(Proxy)*INIT);
+	m_ptr = new Proxy[INIT];
 	// Equavivalent to m_ptr = new Proxy[Init], just need to define defualt constructor
 	if (!m_ptr)
 	{
@@ -210,7 +211,7 @@ const bool Board::clear()
 Board::~Board()
 {
 	delete[] m_a;
-	free(m_ptr);
+	delete[] m_ptr;
 }
 
 ostream & operator<<(ostream & os, const Board & b)
