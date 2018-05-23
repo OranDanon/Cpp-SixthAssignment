@@ -11,14 +11,6 @@ void TicTacToe::printWinner(Player& p)
 	cout << p.name() << " Won" << endl;
 }
 
-const bool TicTacToe::isExist(Coordinate & cor) const
-{
-	size_t index = cor.index(b.size());
-	if (forbidden[index] != 0)
-		return true;
-	return false;
-}
-
 const bool TicTacToe::isWinner(size_t t) const
 {
 	char c;
@@ -56,21 +48,8 @@ const bool TicTacToe::isWinner(size_t t) const
 	return flag3;
 }
 
-const bool TicTacToe::clearForbidden()
-{
-	for (size_t i = 0; i < b.size(); i++)
-	{
-		for (size_t j = 0; j < b.size(); j++)
-		{
-			forbidden[i * b.size() + j] = 0;
-		}
-	}
-	return true;
-}
-
 TicTacToe::TicTacToe(size_t size) :b(size)
 {
-	forbidden = new int[size*size];
 }
 
 Player& TicTacToe::play(Player& p1, Player& p2)
@@ -78,7 +57,6 @@ Player& TicTacToe::play(Player& p1, Player& p2)
 	size_t turn = 0;
 	Coordinate index;
 	Player* players [2] = { &p1, &p2 };
-	this->clearForbidden();
 	b.clear();
 	//cout << b << endl;
 	p1.setChar('X');
@@ -88,11 +66,10 @@ Player& TicTacToe::play(Player& p1, Player& p2)
 		try
 		{
 			index = players[turn]->play(b);
-			if (isExist(index))
+			if (b[index] == 'X' || b[index] == 'Y')
 			{
 				throw IllegalCoordinateException(index, "This index is forbidden");
 			}
-			forbidden[index.index(static_cast<int>(b.size()))] = 1;
 			std::pair<size_t, size_t>temp (index.x(), index.y());
 			b[temp] = players[turn]->mychar();
 			//cout << b << endl;
@@ -140,9 +117,4 @@ Board TicTacToe::board() const
 	os << b;
 	return os.str();*/
 	return b;
-}
-
-TicTacToe::~TicTacToe()
-{
-	delete [] forbidden;
 }

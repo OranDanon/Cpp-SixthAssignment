@@ -12,19 +12,15 @@ private:
 	Player* p2;
 	Player* winnerr;
 	Board b;
-	int *forbidden;
 
 	static const size_t nextTurn(size_t& t);
 	static void printWinner(Player& p);
-	const bool isExist(Coordinate& cor) const;
 	const bool isWinner(size_t t) const;
-	const bool clearForbidden();
 public:
 	TicTacToe(size_t size);
 	Player& play(Player& p1, Player& p2);
 	Player& winner() const;
 	Board board() const;
-	~TicTacToe();
 
 };
 

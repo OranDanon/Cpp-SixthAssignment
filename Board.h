@@ -1,7 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <stdio.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <new>
 #include <exception>
 #include <iostream>
@@ -18,9 +18,6 @@ class Board
 
 private:
 	const static struct param { enum  parameters{ empty = '.', X = 'X', O = 'O' }; }param;
-	Proxy* m_ptr;
-	size_t proxy_counter;
-	size_t prx_cap;
 	size_t m_size;
 	char* m_a;
 	/*
@@ -30,7 +27,6 @@ private:
 	/*
 	 * Copy the Proxy array from board b2, to board b1.
 	*/
-	static void copyProxies(Board& b1, const Board& b2);
 
 public:
 	Board(size_t x);
@@ -39,7 +35,7 @@ public:
 	const Board& operator=(const char& c);
 	friend ostream& operator<< (ostream& os, const Board& c);
 	const char& operator[](std::pair<size_t, size_t> index) const;
-	Proxy& operator[](std::pair<size_t, size_t> index);
+	Proxy operator[](std::pair<size_t, size_t> index);
 	const size_t size()const;
 	const bool isFull() const;
 	const bool isEmpty()const;
