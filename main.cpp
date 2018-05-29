@@ -22,7 +22,7 @@ void playAndPrintWinner(TicTacToe& game, Player& xPlayer, Player& oPlayer) {
 
 
 int main() {
-	TicTacToe game(4);       // Initializes a game on a 4x4 board
+	TicTacToe game(3);       // Initializes a game on a 4x4 board
 	TicTacToe game2(5);
 	XYPlayer player1;
 	YXPlayer player2;
@@ -31,6 +31,7 @@ int main() {
 	XYPlayer player5;
 
 	playAndPrintResults(game, player1, player2);
+	game.board().draw(50);
 	/*
 	The final board is
 	XXXX
@@ -41,6 +42,7 @@ int main() {
 	*/
 
 	playAndPrintResults(game, player2, player1);
+	game.board().draw(100);
 	/*
 	The final board is
 	XOOO
@@ -51,6 +53,7 @@ int main() {
 	*/
 
 	playAndPrintResults(game, player1, player3);
+	game.board().draw(100);
 	/*
 	The final board is
 	X...
@@ -62,6 +65,7 @@ int main() {
 
 
 	playAndPrintResults(game, player3, player1);
+	game.board().draw(100);
 	/*
 	The final board is
 	XO..
@@ -72,6 +76,7 @@ int main() {
 	*/
 
 	playAndPrintResults(game, player2, player4);
+	game.board().draw(100);
 	/*
 	The final board is
 	X...
@@ -82,6 +87,7 @@ int main() {
 	*/
 
 	playAndPrintResults(game, player4, player2);
+	game.board().draw(100);
 	/*
 	The final board is
 	....
@@ -92,6 +98,7 @@ int main() {
 	*/
 
 	playAndPrintResults(game2, player1, player5);
+	game.board().draw(100);
 
 
 	Champion champion;
@@ -111,6 +118,7 @@ int main() {
 	// The winner is <your name>, playing as X!
 	playAndPrintWinner(game, player4, champion);
 	// The winner is <your name>, playing as O!
+	game.board().draw(100);
 
 	return 0;
 }

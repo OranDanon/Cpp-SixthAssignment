@@ -8,6 +8,12 @@ bool Board::checkValidIndex(int index) const
 	return (index >= 0) && (index < m_size);
 }
 
+inline bool Board::exists_test(const std::string & name)
+{
+	struct stat buffer;
+	return (stat(name.c_str(), &buffer) == 0);
+}
+
 
 /**
 * Constructor
@@ -175,4 +181,94 @@ ostream & operator<<(ostream & os, const Board & b)
 		os << endl;
 	}
 	return os;
+}
+
+istream & operator>>(istream & is, const Board & b)
+{
+	for (size_t i = 0; i < b.m_size; i++)
+	{
+		for (size_t j = 0; j < b.m_size; j++)
+		{
+			char* location =  &b.m_a[i * b.m_size + j];
+			is >> *location;
+			if (*location != '.' || *location != 'X' || *location != 'O')
+			{
+				throw IllegalCharException(*location, "You explict the faith I gave you :-<");
+			}
+		}
+	}
+	return is;
+}
+const bool Board::draw(const int n) const
+{
+	// Taken from Erel Segal-Halevi git
+	const int dimx = n, dimy = n;
+	size_t i = 0;
+	ostringstream st;
+	st << "image" << i << ".ppm";
+	while (exists_test(st.str()))
+	{
+		i++;
+		st.str(std::string());
+		st << "image" << i << ".ppm";
+	}
+	ofstream imageFile(st.str(), ios::out | ios::binary);
+	imageFile << "P6" << endl << dimx << " " << dimy << endl << 255 << endl;
+	RGB* image = new RGB[dimx*dimy];
+	if (image == nullptr)
+	{
+		cerr << "error";
+	}
+	int size = n / m_size;
+	for (size_t i = 0; i < m_size; i++)
+	{
+		for (size_t j = 0; j < m_size; j++)
+		{
+			switch (m_a[m_size* i + j])
+			{
+			case 'X':
+				for (size_t k = 0; k < size; k++)
+				{
+					for (size_t l = 0; l < size; l++)
+					{
+						// The index of the {i,j} in the image is equal to
+						// {n * size * i , j * size}
+						// Since each entry has size colums and we pass i entries
+						// and each entry has size colums and we pass j entries
+						// so lets note the new location using (i',j')
+						// we ran from (i' ... i' + size) in each row
+						// When we go to the next row we pass n entries
+						// the claim is follows
+						image[n * size * i + j * size + k * n + l].blue = 255;
+					}
+				}
+				break;
+			case 'O':
+				for (size_t k = 0; k < size; k++)
+				{
+					for (size_t l = 0; l < size; l++)
+					{
+						image[n * size * i + j * size + k * n + l].red = 255;
+					}
+				}
+				break;
+			case '.':
+				for (size_t k = 0; k < size; k++)
+				{
+					for (size_t l = 0; l < size; l++)
+					{
+						image[n * size * i + j * size + k * n + l].green = 255;
+					}
+				}
+				break;
+			}
+		}
+	}
+	///
+	///image processing
+	///
+	imageFile.write(reinterpret_cast<char*>(&image), 3 * n * n);
+	imageFile.close();
+	delete[] image;
+	return true;
 }
