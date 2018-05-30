@@ -239,7 +239,9 @@ const bool Board::draw(const int n) const
 						// we ran from (i' ... i' + size) in each row
 						// When we go to the next row we pass n entries
 						// the claim is follows
-						image[n * size * i + j * size + k * n + l].blue = 255;
+						image[n * size * i + j * size + k * n + l].red = 100;  //******//
+						image[n * size * i + j * size + k * n + l].green = 248;// Green//
+						image[n * size * i + j * size + k * n + l].blue = 173; //******//
 					}
 				}
 				break;
@@ -248,7 +250,9 @@ const bool Board::draw(const int n) const
 				{
 					for (size_t l = 0; l < size; l++)
 					{
-						image[n * size * i + j * size + k * n + l].red = 255;
+						image[n * size * i + j * size + k * n + l].red = 200;  // ****** //
+						image[n * size * i + j * size + k * n + l].green = 162;// Purple //
+						image[n * size * i + j * size + k * n + l].blue = 236; // ****** //
 					}
 				}
 				break;
@@ -257,7 +261,9 @@ const bool Board::draw(const int n) const
 				{
 					for (size_t l = 0; l < size; l++)
 					{
-						image[n * size * i + j * size + k * n + l].green = 255;
+						image[n * size * i + j * size + k * n + l].red = 255;  // ******* //
+						image[n * size * i + j * size + k * n + l].green = 255;//  White  //
+						image[n * size * i + j * size + k * n + l].blue = 255; // ******* //
 					}
 				}
 				break;
@@ -267,7 +273,7 @@ const bool Board::draw(const int n) const
 	///
 	///image processing
 	///
-	imageFile.write(reinterpret_cast<char*>(&image), 3 * n * n);
+	imageFile.write(reinterpret_cast<char*>(image), 3 * n * n);
 	imageFile.close();
 	delete[] image;
 	return true;
