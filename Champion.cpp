@@ -9,6 +9,7 @@ const string Champion::name() const
 	return "Roee and Oran";
 }
 
+
 const Coordinate Champion::play(const Board & board)
 {
 	size_t last = board.size() - 1;

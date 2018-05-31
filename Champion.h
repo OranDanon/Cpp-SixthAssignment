@@ -13,7 +13,7 @@ private:
 
 public:
 	Champion();
-	const virtual string name() const;
+	const string name() const override;
 	const Coordinate play(const Board& board) override;
 };
 

@@ -14,6 +14,10 @@ inline bool Board::exists_test(const std::string & name)
 	return (stat(name.c_str(), &buffer) == 0);
 }
 
+Board::Board():m_size(0), m_a(nullptr)
+{
+}
+
 
 /**
 * Constructor
@@ -95,7 +99,7 @@ const char& Board::operator[](std::pair<size_t, size_t> index) const
 	size_t indx = index.first * m_size + index.second;
 	size_t size = m_size * m_size;
 	// check for subscript out-of-range error
-	if (indx < 0 || indx > size)
+	if (indx > size)
 	{
 		throw IllegalCoordinateException(index, "Out of range");
 	}
@@ -182,24 +186,31 @@ ostream & operator<<(ostream & os, const Board & b)
 	}
 	return os;
 }
-
-istream & operator>>(istream & is, const Board & b)
+istream & operator>>(istream & is, Board & b)
 {
+	string st("");
+	//stringstream ss("");
+	is >> st;
+	b = Board(st.size());
 	for (size_t i = 0; i < b.m_size; i++)
 	{
 		for (size_t j = 0; j < b.m_size; j++)
 		{
 			char* location =  &b.m_a[i * b.m_size + j];
-			is >> *location;
-			if (*location != '.' || *location != 'X' || *location != 'O')
+			*location = st[j];
+			if (*location != '.' && *location != 'X' && *location != 'O')
 			{
 				throw IllegalCharException(*location, "You explict the faith I gave you :-<");
 			}
 		}
+		if (i != b.size() - 1)
+		{
+			is >> st;
+		}
 	}
 	return is;
 }
-const bool Board::draw(const int n) const
+const string Board::draw(const int n) const
 {
 	// Taken from Erel Segal-Halevi git
 	const int dimx = n, dimy = n;
@@ -219,7 +230,7 @@ const bool Board::draw(const int n) const
 	{
 		cerr << "error";
 	}
-	int size = n / m_size;
+	size_t size = n / m_size;
 	for (size_t i = 0; i < m_size; i++)
 	{
 		for (size_t j = 0; j < m_size; j++)
@@ -276,5 +287,5 @@ const bool Board::draw(const int n) const
 	imageFile.write(reinterpret_cast<char*>(image), 3 * n * n);
 	imageFile.close();
 	delete[] image;
-	return true;
+	return st.str();
 }

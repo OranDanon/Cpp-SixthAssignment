@@ -1,11 +1,13 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <stdio.h>
+#include <math.h>
 #include <cstdlib>
 #include <fstream>
 #include <new>
 #include <exception>
 #include <iostream>
+#include <iterator> 
 #include <sys/stat.h>
 #include <string>
 
@@ -38,19 +40,20 @@ private:
 	inline static bool exists_test(const std::string& name);
 
 public:
+	Board();
 	Board(size_t x);
 	Board(const Board& other);
 	const Board& operator=(const Board& other);
 	const Board& operator=(const char& c);
 	friend ostream& operator<< (ostream& os, const Board& b);
-	friend istream& operator>> (istream& is, const Board& b);
+	friend istream& operator>> (istream& is, Board& b);
 	const char& operator[](std::pair<size_t, size_t> index) const;
 	Proxy operator[](std::pair<size_t, size_t> index);
-	const size_t size()const;
+	const size_t size() const;
 	const bool isFull() const;
-	const bool isEmpty()const;
+	const bool isEmpty() const;
 	const bool clear();
-	const bool draw(const int n) const;
+	const std::string draw(const int n) const;
 	~Board();
 };
 
