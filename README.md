@@ -1,4 +1,4 @@
-# Cpp Sixth Assignment[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+# Cpp Sixth Assignment [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 ### Author & Account
 
 | Author  | Account |
